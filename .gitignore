@@ -1,0 +1,102 @@
+# Byte‐compiled / optimized files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Virtual environments
+venv/
+.env/
+.venv/
+ENV/
+env/
+env.bak/
+venv.bak/
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# Translations
+*.mo
+*.pot
+
+# IDE / Editor directories and files
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Kivy / GUI app specific (examples)
+*.kvc   # compiled .kv if you use compilation
+*.log   # log files your app may output
+# (Optional) If you produce build artifacts like .apk / .aab for Kivy/Android
+*.apk
+*.aab
+buildozer/
+bin/
+obj/
+
+# Mongo / Database / Local generated data
+*.db        # e.g., SQLite if used locally
+*.lok       # local lock/db files
+*.pid       # process id files
+dump/       # if you use a dump folder for Mongo exports
+
+# OS files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+*.swp
+*.swo
+
+# Miscellaneous caches
+.mypy_cache/
+.dmypy.json
+.pyre/
+.pytype/
+cython_debug/
+*.log
+
+# Other environment / project state
+.envrc
+*.env
+.env.local
+.local.env
+secrets.*   # if you store secrets files locally
