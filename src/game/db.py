@@ -1,30 +1,37 @@
 import os
 from pymongo import MongoClient, errors
 
-# Connection URI including default database name
-MONGO_URI = os.getenv(
-    "MONGO_URI",
-    "mongodb://admin:admin@192.168.1.14:27017/ship_rpg_db?authSource=admin"
-)
+USE_MOCK_DB = os.getenv("USE_MOCK_DB", "false").lower() in ("1", "true", "yes")
 
-# Timeout values (in milliseconds)
-TIMEOUT_MS = int(os.getenv("MONGO_TIMEOUT_MS", "5000"))  # default to 5 seconds
+if USE_MOCK_DB:
+    import mongomock
+    client = mongomock.MongoClient()
+    # You may skip URI and timeouts because mock doesn’t need real server
+    db = client.get_database("ship_rpg_mock_db")
+    print("[db] Using mongomock in-memory database")
+else:
+    # real DB mode
+    MONGO_URI = os.getenv(
+        "MONGO_URI",
+        "mongodb://admin:admin@192.168.1.14:27017/ship_rpg_db?authSource=admin"
+    )
+    TIMEOUT_MS = int(os.getenv("MONGO_TIMEOUT_MS", "5000"))
 
-# Create client with timeout so it fails fast if cannot connect
-client = MongoClient(
-    MONGO_URI,
-    serverSelectionTimeoutMS=TIMEOUT_MS,
-    connectTimeoutMS=TIMEOUT_MS,
-    socketTimeoutMS=TIMEOUT_MS
-)
-
-# Explicitly pick the database by name
-DB_NAME = os.getenv("MONGO_DBNAME", "ship_rpg_db")
-db = client.get_database(DB_NAME)
+    client = MongoClient(
+        MONGO_URI,
+        serverSelectionTimeoutMS=TIMEOUT_MS,
+        connectTimeoutMS=TIMEOUT_MS,
+        socketTimeoutMS=TIMEOUT_MS
+    )
+    DB_NAME = os.getenv("MONGO_DBNAME", "ship_rpg_db")
+    db = client.get_database(DB_NAME)
+    print(f"[db] Connecting to MongoDB at {MONGO_URI}")
 
 def check_connection() -> bool:
+    if USE_MOCK_DB:
+        # mock always “connected”
+        return True
     try:
-        # Send ping command to confirm connection
         client.admin.command("ping")
         return True
     except errors.PyMongoError as e:
